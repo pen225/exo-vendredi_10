@@ -4,21 +4,30 @@ let connecter = document.querySelector("#submit");
 let message = document.querySelector(".message");
 let form = document.querySelector("#myForm");
 
-const getUser = JSON.parse(localStorage.getItem("user"));
+//Rucuperation du localstorage
+const getUser = JSON.parse(localStorage.getItem("student"));
+
+//Ecouteur sur mon formulaire
 form.addEventListener('submit',(e)=>{
-    console.log(getUser);
     e.preventDefault();
-    if (getUser.name != nom.value || getUser.pass != password.value) {
-        message.textContent = "Nom ou mot de passe incorecte";
-        message.style.visibility = "visible";
-        message.classList.add("message");
-        message.style.color= "red";
-    }else{
-        message.textContent = "Connexion reussie";
-        message.style.visibility = "visible";
-        message.classList.add("message");
-        message.style.color= "green";
-        nom.value = "";
-        password.value = "";
+
+    //Parcourir le tableau
+    for(let etudiant of getUser){
+
+        //Vérifier si la valeur entrée existe dans le tableau
+        if (etudiant.name == nom.value && etudiant.pass == password.value) {
+            message.innerHTML = `Connexion reussie <br/> bienvenue mr ${etudiant.name}`;
+            message.style.visibility = "visible";
+            message.classList.add("message");
+            message.style.color= "green";
+            nom.value = "";
+            password.value = "";
+            break;
+        }else{
+             message.textContent = "Nom ou mot de passe incorecte";
+            message.style.visibility = "visible";
+            message.classList.add("message");
+            message.style.color= "red";
+        }
     }
-})
+});

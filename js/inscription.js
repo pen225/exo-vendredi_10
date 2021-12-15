@@ -9,24 +9,28 @@ let form = document.querySelector("#myForm");
 form.addEventListener('submit',verification);
 
 
-// Verification
+//Verification
 function verification(e) {
-    
+
+    //Creation de mon objet user
     const user ={
         name: nom.value,
         secondName: prenom.value,
         pass: password.value,
         rPassword: repeatPassword.value
     }
+
+    //Vérifier si les Inputs sont vides
     if (user.name === "" || user.secondName === "" || user.pass ==="" || user.rPassword ==="") {
         alert("Veuillez remplir tous les champs");
     }else{
-        // Verification de password
+
+        //Verification de password
         if (user.pass != user.rPassword) {
             alert("Veuillez entrer le même mot de passe");
         }else{
-            // Fonction enregistrer
             
+            // Fonction enregistrer
             enregistrer(user);
         }
         
@@ -36,18 +40,24 @@ function verification(e) {
 
 // FONCTION
 
-// Enregistrement
+Enregistrement
 function enregistrer(user) {
-    let getUser = localStorage.getItem("userInfo");
-            if (getUser) {
-                
+    let usr =JSON.parse(localStorage.getItem("student"));
+            if (usr) {  
+                usr.push(user)
+                localStorage.setItem("student",JSON.stringify(usr));
+                nom.value ="";
+                prenom.value ="";
+                password.value ="";
+                repeatPassword.value ="";
             }else{
-                localStorage.setItem("user",JSON.stringify(user));
+                usr = [];
+                usr.push(user)
+                localStorage.setItem("student",JSON.stringify(usr));
                 nom.value ="";
                 prenom.value ="";
                 password.value ="";
                 repeatPassword.value ="";
             }
-            
 }
 
